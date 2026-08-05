@@ -4,7 +4,7 @@ Official **Node.js / TypeScript** client for the [Mailofly REST API](https://doc
 
 Requires **Node 18+** (global `fetch`).
 
-> **Source of truth:** developed in the [mailofly monorepo](https://github.com/redevs/mailofly) under `packages/npm`. This public repo is mirrored automatically on change.
+> **Source of truth:** developed in the [mailofly monorepo](https://github.com/godstark82/mailofly) under `packages/npm`. This public repo is mirrored automatically on change.
 
 ## Install
 
@@ -73,7 +73,7 @@ Full request/response shapes match [`/api/v1` routes](https://docs.mailofly.com/
 ## Releasing
 
 1. Bump `version` in `package.json` (and this changelog) in the **monorepo** PR.
-2. Merge to `main`/`master` → GitHub Action syncs this folder to `redevs/mailofly-js`.
+2. Merge to `main`/`master` → GitHub Action syncs this folder to `teamredevs/mailofly-js`.
 3. Publish workflow runs and publishes to npm only when the version is new.
 
 ## License

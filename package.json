@@ -1,6 +1,6 @@
 {
   "name": "mailofly",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Official JavaScript/TypeScript client for the Mailofly REST API.",
   "license": "MIT",
   "author": "Mailofly",
@@ -10,7 +10,7 @@
     "url": "git+https://github.com/teamredevs/mailofly-js.git"
   },
   "bugs": {
-    "url": "https://github.com/teamroom/mailofly-js/issues"
+    "url": "https://github.com/teamredevs/mailofly-js/issues"
   },
   "type": "module",
   "main": "./dist/index.js",
