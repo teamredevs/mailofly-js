@@ -1,0 +1,50 @@
+{
+  "name": "mailofly",
+  "version": "0.1.0",
+  "description": "Official JavaScript/TypeScript client for the Mailofly REST API.",
+  "license": "MIT",
+  "author": "Mailofly",
+  "homepage": "https://docs.mailofly.com/sdks/typescript",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/teamredevs/mailofly-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/teamroom/mailofly-js/issues"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "typescript": "~5.9.0"
+  },
+  "keywords": [
+    "mailofly",
+    "email",
+    "api",
+    "sdk",
+    "client"
+  ]
+}
