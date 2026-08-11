@@ -23,7 +23,10 @@ export async function mailoflyRequest<T>(options: {
   }
   const url = `${base}${path}`;
 
-  const headers: Record<string, string> = { Accept: "application/json" };
+  const headers: Record<string, string> = {
+    Accept: "application/json",
+    "X-Mailofly-Client": "sdk/js",
+  };
   if (options.apiKey) headers.Authorization = `Bearer ${options.apiKey}`;
   if (options.body !== undefined) headers["Content-Type"] = "application/json";
 
