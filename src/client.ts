@@ -2,6 +2,8 @@ import { mailoflyRequest } from "./http.js";
 import type {
   ComposeSendParams,
   ComposeSendResult,
+  EmailsSendParams,
+  EmailsSendResult,
   ItemResponse,
   ListResponse,
   MailoflyAccount,
@@ -138,9 +140,15 @@ export class Mailofly {
     }> => this.req(`/campaigns/${encodeURIComponent(id)}/send`, { method: "POST", body: body ?? { send_now: true } }),
   };
 
+  readonly emails = {
+    send: (params: EmailsSendParams): Promise<EmailsSendResult> =>
+      this.req<EmailsSendResult>("/emails", { method: "POST", body: params }),
+  };
+
+  /** @deprecated Use `emails.send` instead. */
   readonly compose = {
     send: (params: ComposeSendParams): Promise<ComposeSendResult> =>
-      this.req<ComposeSendResult>("/compose", { method: "POST", body: params }),
+      this.req<ComposeSendResult>("/emails", { method: "POST", body: params }),
   };
 
   readonly mailLogs = {

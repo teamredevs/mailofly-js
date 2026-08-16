@@ -26,13 +26,14 @@ const client = new Mailofly({
 
 try {
   const { data: accounts } = await client.accounts.list();
-  await client.compose.send({
+  const { id } = await client.emails.send({
+    from: "Acme <onboarding@example.com>",
+    to: ["you@example.com"],
+    subject: "Hello",
+    html: "<p>Thanks for signing up.</p>",
     account_key: "acc_…",
-    subject: "Hi {{first_name}}",
-    body: "<p>Thanks for signing up.</p>",
-    recipients: { emails: ["you@example.com"] },
-    variables: { first_name: "Alex" },
   });
+  console.log("Sent:", id);
 } catch (e) {
   if (e instanceof MailoflyError) {
     console.error(e.status, e.error, e.detailMessage);
@@ -59,7 +60,8 @@ console.log(meta.resources);
 | `client.templates` | `list`, `create`, `get`, `update`, `delete` |
 | `client.segments` | `list`, `create`, `get`, `update`, `delete`, `contacts.list/add/remove` |
 | `client.campaigns` | `list`, `create`, `get`, `update`, `delete`, `runs`, `send` |
-| `client.compose` | `send` |
+| `client.emails` | `send` |
+| `client.compose` | `send` (deprecated — use `emails`) |
 | `client.mailLogs` | `list` |
 
 Full request/response shapes match [`/api/v1` routes](https://docs.mailofly.com/api).

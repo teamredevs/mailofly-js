@@ -45,23 +45,52 @@ export type MailLogsPage = {
   total: number;
 };
 
-export type ComposeSendResult = {
-  ok: true;
-  sent: number;
-  failed: { email: string; error: string }[];
+export type EmailsSendResult = {
+  id: string;
 };
+
+export type EmailsSendParams = {
+  /** Optional public account key (acc_…). When omitted, any eligible account is auto-selected. */
+  account_key?: string;
+  accountKey?: string;
+  /** Sender email. Supports `Name <email@example.com>`. */
+  from: string;
+  to: string | string[];
+  subject?: string;
+  html?: string;
+  text?: string;
+  cc?: string | string[];
+  bcc?: string | string[];
+  reply_to?: string | string[];
+  replyTo?: string | string[];
+  headers?: Record<string, string>;
+  tags?: { name: string; value: string }[];
+  attachments?: {
+    filename: string;
+    content?: string;
+    path?: string;
+    content_type?: string;
+    content_id?: string;
+  }[];
+  template?: {
+    id: string;
+    variables?: Record<string, string | number>;
+  };
+  template_id?: string;
+  variables?: Record<string, string | number>;
+};
+
+export type ComposeSendResult = EmailsSendResult;
 
 export type ComposeRecipients =
   | { emails: string | string[]; type?: string }
   | { type: "contacts"; contact_ids: string[] };
 
+/** @deprecated Use EmailsSendParams instead. */
 export type ComposeSendParams = {
-  account_key: string;
-  /** Use a saved template (mutually exclusive with subject/body). */
+  account_key?: string;
   template_id?: string;
-  /** Inline subject (requires body when template_id is omitted). */
   subject?: string;
-  /** HTML body (requires subject when template_id is omitted). */
   body?: string;
   recipients: ComposeRecipients;
   variables?: Record<string, string>;
