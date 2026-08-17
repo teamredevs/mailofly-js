@@ -4,6 +4,13 @@ import type {
   ComposeSendResult,
   EmailsSendParams,
   EmailsSendResult,
+  EmailsBatchSendResult,
+  EmailsListQuery,
+  EmailsListResult,
+  ResendEmailDetail,
+  EmailsListQuery,
+  EmailsListResult,
+  ResendEmailDetail,
   ItemResponse,
   ListResponse,
   MailoflyAccount,
@@ -141,8 +148,23 @@ export class Mailofly {
   };
 
   readonly emails = {
+    list: (query?: EmailsListQuery): Promise<EmailsListResult> => {
+      const q: Record<string, string | number | boolean> = {};
+      if (query?.limit != null) q.limit = query.limit;
+      if (query?.after) q.after = query.after;
+      if (query?.before) q.before = query.before;
+      return this.req<EmailsListResult>("/emails", { query: Object.keys(q).length ? q : undefined });
+    },
+    get: (id: string): Promise<ResendEmailDetail> =>
+      this.req<ResendEmailDetail>(`/emails/${encodeURIComponent(id)}`),
     send: (params: EmailsSendParams): Promise<EmailsSendResult> =>
       this.req<EmailsSendResult>("/emails", { method: "POST", body: params }),
+  };
+
+  /** Resend-compatible batch send (POST /emails/batch). */
+  readonly batch = {
+    send: (emails: EmailsSendParams[]): Promise<EmailsBatchSendResult> =>
+      this.req<EmailsBatchSendResult>("/emails/batch", { method: "POST", body: emails }),
   };
 
   /** @deprecated Use `emails.send` instead. */

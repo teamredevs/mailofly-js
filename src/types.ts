@@ -49,6 +49,43 @@ export type EmailsSendResult = {
   id: string;
 };
 
+export type EmailsBatchSendResult = {
+  data: { id: string }[];
+};
+
+export type ResendEmailListItem = {
+  object: "email";
+  id: string;
+  message_id: string | null;
+  to: string[];
+  from: string | null;
+  created_at: string;
+  subject: string;
+  bcc: string[] | null;
+  cc: string[] | null;
+  reply_to: string[] | null;
+  last_event: string;
+  scheduled_at: string | null;
+};
+
+export type ResendEmailDetail = ResendEmailListItem & {
+  html: string | null;
+  text: string | null;
+  tags: { name: string; value: string }[];
+};
+
+export type EmailsListResult = {
+  object: "list";
+  has_more: boolean;
+  data: ResendEmailListItem[];
+};
+
+export type EmailsListQuery = {
+  limit?: number;
+  after?: string;
+  before?: string;
+};
+
 export type EmailsSendParams = {
   /** Optional public account key (acc_…). When omitted, any eligible account is auto-selected. */
   account_key?: string;
