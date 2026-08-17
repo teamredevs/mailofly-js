@@ -115,6 +115,9 @@ export type EmailsSendParams = {
   };
   template_id?: string;
   variables?: Record<string, string | number>;
+  /** ISO 8601. When in the future, the email is queued instead of sent immediately. */
+  scheduled_at?: string;
+  scheduledAt?: string;
 };
 
 export type ComposeSendResult = EmailsSendResult;

@@ -156,6 +156,10 @@ export class Mailofly {
       this.req<ResendEmailDetail>(`/emails/${encodeURIComponent(id)}`),
     send: (params: EmailsSendParams): Promise<EmailsSendResult> =>
       this.req<EmailsSendResult>("/emails", { method: "POST", body: params }),
+    update: (id: string, body: { scheduled_at?: string | null; scheduledAt?: string | null }): Promise<ResendEmailDetail> =>
+      this.req<ResendEmailDetail>(`/emails/${encodeURIComponent(id)}`, { method: "PATCH", body }),
+    cancel: (id: string): Promise<ResendEmailDetail> =>
+      this.req<ResendEmailDetail>(`/emails/${encodeURIComponent(id)}/cancel`, { method: "POST" }),
   };
 
   /** Resend-compatible batch send (POST /emails/batch). */
@@ -177,7 +181,7 @@ export class Mailofly {
       campaign_id?: string;
       account_id?: string;
       campaign_run_id?: string;
-      status?: "pending" | "sending" | "sent" | "failed" | "deferred";
+      status?: "pending" | "sending" | "sent" | "failed" | "deferred" | "halted" | "cancelled";
     }): Promise<MailLogsPage> => {
       const q: Record<string, string | number | boolean> = {};
       if (query?.page != null) q.page = query.page;
