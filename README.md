@@ -1,15 +1,17 @@
-# mailofly
+# @mailofly/node
 
-Official **Node.js / TypeScript** client for the [Mailofly REST API](https://docs.mailofly.com/api).
+Official **Node.js / TypeScript** SDK for the [Mailofly REST API](https://docs.mailofly.com/api).
 
 Requires **Node 18+** (global `fetch`).
-
-> **Source of truth:** developed in the [mailofly monorepo](https://github.com/godstark82/mailofly) under `packages/npm`. This public repo is mirrored automatically on change.
 
 ## Install
 
 ```bash
-npm install mailofly
+npm install @mailofly/node
+# or
+pnpm add @mailofly/node
+# or
+yarn add @mailofly/node
 ```
 
 ## Usage
@@ -17,7 +19,7 @@ npm install mailofly
 Initialize with your API key from [**User → API keys**](https://www.mailofly.com/user/api-keys):
 
 ```ts
-import { Mailofly, MailoflyError } from "mailofly";
+import { Mailofly, MailoflyError } from "@mailofly/node";
 
 const client = new Mailofly({
   apiKey: process.env.MAILOFLY_API_KEY!,
@@ -45,7 +47,7 @@ try {
 ### Discovery (no API key)
 
 ```ts
-import { Mailofly } from "mailofly";
+import { Mailofly } from "@mailofly/node";
 
 const meta = await Mailofly.discovery();
 console.log(meta.resources);

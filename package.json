@@ -1,7 +1,7 @@
 {
-  "name": "mailofly",
-  "version": "0.1.1",
-  "description": "Official JavaScript/TypeScript client for the Mailofly REST API.",
+  "name": "@mailofly/node",
+  "version": "1.1.0",
+  "description": "Official Node.js / TypeScript SDK for the Mailofly email API.",
   "license": "MIT",
   "author": "Mailofly",
   "homepage": "https://docs.mailofly.com/sdks/typescript",
