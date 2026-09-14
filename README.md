@@ -23,11 +23,10 @@ import { Mailofly, MailoflyError } from "@mailofly/node";
 
 const client = new Mailofly({
   apiKey: process.env.MAILOFLY_API_KEY!,
-  // baseUrl: "https://www.mailofly.com", // optional; default shown
 });
 
 try {
-  const { data: accounts } = await client.accounts.list();
+  const { data: identities } = await client.identities.list();
   const { id } = await client.emails.send({
     from: "Acme <onboarding@example.com>",
     to: ["you@example.com"],
@@ -57,7 +56,8 @@ console.log(meta.resources);
 
 | Namespace | Methods |
 |-----------|---------|
-| `client.accounts` | `list`, `create`, `get`, `update`, `delete` |
+| `client.identities` | `list`, `get`, `update`, `delete` *(creation is dashboard-only)* |
+| `client.accounts` | *(deprecated alias for `client.identities`)* |
 | `client.contacts` | `list`, `create`, `get`, `update`, `delete` |
 | `client.templates` | `list`, `create`, `get`, `update`, `delete` |
 | `client.segments` | `list`, `create`, `get`, `update`, `delete`, `contacts.list/add/remove` |

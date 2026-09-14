@@ -10,7 +10,7 @@ import type {
   ResendEmailDetail,
   ItemResponse,
   ListResponse,
-  MailoflyAccount,
+  MailoflyIdentity,
   MailoflyCampaign,
   MailoflyContact,
   MailoflyDiscovery,
@@ -19,14 +19,14 @@ import type {
   MailLogsPage,
 } from "./types.js";
 
-const DEFAULT_BASE_URL = "https://www.mailofly.com";
+const DEFAULT_BASE_URL = "https://api.mailofly.com";
 const API_PREFIX = "/api/v1";
 
 export type MailoflyOptions = {
   /** Mailofly API key (`mf_live_…`). */
   apiKey: string;
   /**
-   * Origin only, no trailing slash (e.g. `https://www.mailofly.com`).
+   * Origin only, no trailing slash (defaults to `https://api.mailofly.com`).
    * Paths `/api/v1/...` are appended automatically.
    */
   baseUrl?: string;
@@ -66,18 +66,16 @@ export class Mailofly {
     });
   }
 
-  readonly accounts = {
-    list: (): Promise<ListResponse<MailoflyAccount>> => this.req("/accounts"),
-    create: (body: Record<string, unknown>): Promise<ItemResponse<MailoflyAccount>> =>
-      this.req("/accounts", { method: "POST", body }),
-    get: (id: string): Promise<ItemResponse<MailoflyAccount>> => this.req(`/accounts/${encodeURIComponent(id)}`),
-    update: (id: string, body: Record<string, unknown>): Promise<ItemResponse<MailoflyAccount>> =>
-      this.req(`/accounts/${encodeURIComponent(id)}`, { method: "PATCH", body }),
-    delete: (id: string): Promise<{ ok: boolean }> => this.req(`/accounts/${encodeURIComponent(id)}`, { method: "DELETE" }),
+  readonly identities = {
+    list: (): Promise<ListResponse<MailoflyIdentity>> => this.req("/identities"),
+    get: (id: string): Promise<ItemResponse<MailoflyIdentity>> => this.req(`/identities/${encodeURIComponent(id)}`),
+    update: (id: string, body: Record<string, unknown>): Promise<ItemResponse<MailoflyIdentity>> =>
+      this.req(`/identities/${encodeURIComponent(id)}`, { method: "PATCH", body }),
+    delete: (id: string): Promise<{ ok: boolean }> => this.req(`/identities/${encodeURIComponent(id)}`, { method: "DELETE" }),
   };
 
-  /** Alias for `accounts`. Supports both `/identities` and `/accounts`. */
-  readonly identities = this.accounts;
+  /** @deprecated Use `client.identities` instead. Identities must be created in the dashboard. */
+  readonly accounts = this.identities;
 
   readonly contacts = {
     list: (query?: { segment_id?: string }): Promise<ListResponse<MailoflyContact>> =>
