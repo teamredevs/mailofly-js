@@ -24,6 +24,8 @@ export type MailoflyAccount = {
   account_key?: string;
 };
 
+export type MailoflyIdentity = MailoflyAccount;
+
 export type MailoflyContact = Record<string, unknown>;
 
 export type MailoflyTemplate = Record<string, unknown>;

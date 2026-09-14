@@ -14,6 +14,7 @@ export type {
   ItemResponse,
   ListResponse,
   MailoflyAccount,
+  MailoflyIdentity,
   MailoflyCampaign,
   MailoflyContact,
   MailoflyDiscovery,

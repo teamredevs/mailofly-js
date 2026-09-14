@@ -76,6 +76,9 @@ export class Mailofly {
     delete: (id: string): Promise<{ ok: boolean }> => this.req(`/accounts/${encodeURIComponent(id)}`, { method: "DELETE" }),
   };
 
+  /** Alias for `accounts`. Supports both `/identities` and `/accounts`. */
+  readonly identities = this.accounts;
+
   readonly contacts = {
     list: (query?: { segment_id?: string }): Promise<ListResponse<MailoflyContact>> =>
       this.req("/contacts", {
