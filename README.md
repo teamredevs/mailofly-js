@@ -62,7 +62,7 @@ console.log(meta.resources);
 | `client.templates` | `list`, `create`, `get`, `update`, `delete` |
 | `client.segments` | `list`, `create`, `get`, `update`, `delete`, `contacts.list/add/remove` |
 | `client.campaigns` | `list`, `create`, `get`, `update`, `delete`, `runs`, `send` |
-| `client.emails` | `list`, `get`, `send` |
+| `client.emails` | `list`, `get`, `send`, `update`, `cancel` |
 | `client.batch` | `send` |
 | `client.compose` | `send` (deprecated — use `emails`) |
 | `client.mailLogs` | `list` |
