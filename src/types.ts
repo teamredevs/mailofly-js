@@ -1,4 +1,4 @@
-/** Response from unauthenticated `GET /api/v1` (discovery). */
+/** Response from unauthenticated `GET /` (discovery). */
 export type MailoflyDiscovery = {
   name: string;
   version: string;

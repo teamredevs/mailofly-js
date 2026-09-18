@@ -20,14 +20,13 @@ import type {
 } from "./types.js";
 
 const DEFAULT_BASE_URL = "https://api.mailofly.com";
-const API_PREFIX = "/api/v1";
+const API_PREFIX = "";
 
 export type MailoflyOptions = {
   /** Mailofly API key (`mf_live_…`). */
   apiKey: string;
   /**
    * Origin only, no trailing slash (defaults to `https://api.mailofly.com`).
-   * Paths `/api/v1/...` are appended automatically.
    */
   baseUrl?: string;
 };
@@ -49,10 +48,10 @@ export class Mailofly {
     this.baseUrl = (options.baseUrl ?? DEFAULT_BASE_URL).replace(/\/$/, "");
   }
 
-  /** Unauthenticated discovery (`GET /api/v1`). */
+  /** Unauthenticated discovery (`GET /`). */
   static async discovery(opts?: { baseUrl?: string }): Promise<MailoflyDiscovery> {
     const baseUrl = (opts?.baseUrl ?? DEFAULT_BASE_URL).replace(/\/$/, "");
-    return mailoflyRequest<MailoflyDiscovery>({ baseUrl, path: API_PREFIX, method: "GET" });
+    return mailoflyRequest<MailoflyDiscovery>({ baseUrl, path: "/", method: "GET" });
   }
 
   private req<T>(path: string, init?: { method?: "GET" | "POST" | "PATCH" | "DELETE"; body?: unknown; query?: Record<string, string | number | boolean | undefined> }): Promise<T> {
