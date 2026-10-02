@@ -1,3 +1,9 @@
+## 1.3.0
+
+- Added `client.automations` for managing workflows (list, get, create, update, delete, stop, duplicate).
+- Added `client.automations.runs` for listing and inspecting workflow execution history.
+- Added `client.events` for publishing and tracking custom business events to trigger automations.
+
 ## 1.2.0
 
 - Added full support and documentation for scheduled email lifecycle: `client.emails.update(id, { scheduled_at })` and `client.emails.cancel(id)`.

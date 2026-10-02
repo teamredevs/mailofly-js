@@ -137,3 +137,62 @@ export type ComposeSendParams = {
   recipients: ComposeRecipients;
   variables?: Record<string, string>;
 };
+
+export type MailoflyAutomation = {
+  id: string;
+  name: string;
+  status: "draft" | "active" | "disabled" | "archived";
+  trigger: Record<string, unknown>;
+  steps: Record<string, unknown>[];
+  connections: Record<string, unknown>[];
+  created_at: string;
+  updated_at: string;
+};
+
+export type MailoflyAutomationRun = {
+  id: string;
+  automation_id: string;
+  status: "pending" | "running" | "completed" | "failed" | "cancelled";
+  contact_id: string | null;
+  contact_email: string | null;
+  current_step_key: string | null;
+  context: Record<string, unknown>;
+  error: string | null;
+  created_at: string;
+  started_at: string | null;
+  completed_at: string | null;
+  steps?: Record<string, unknown>[];
+};
+
+export type MailoflyAutomationEvent = {
+  id: string;
+  name: string;
+  contact_email: string | null;
+  contact_id: string | null;
+  payload: Record<string, unknown>;
+  created_at: string;
+};
+
+export type MailoflyEventSendParams = {
+  /** Event name, e.g. "user.signup" */
+  event?: string;
+  name?: string;
+  /** Contact recipient target */
+  contact?: {
+    email?: string;
+    id?: string;
+  };
+  /** Direct recipient email shorthand */
+  email?: string;
+  /** Event payload properties passed into automation context */
+  payload?: Record<string, unknown>;
+  /** @deprecated Use payload instead */
+  data?: Record<string, unknown>;
+};
+
+export type MailoflyEventSendResult = {
+  id: string;
+  object: "event";
+  status: "accepted";
+};
+

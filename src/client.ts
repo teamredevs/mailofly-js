@@ -17,6 +17,11 @@ import type {
   MailoflySegment,
   MailoflyTemplate,
   MailLogsPage,
+  MailoflyAutomation,
+  MailoflyAutomationRun,
+  MailoflyAutomationEvent,
+  MailoflyEventSendParams,
+  MailoflyEventSendResult,
 } from "./types.js";
 
 const DEFAULT_BASE_URL = "https://api.mailofly.com";
@@ -192,5 +197,67 @@ export class Mailofly {
       if (query?.status) q.status = query.status;
       return this.req("/mail-logs", { query: Object.keys(q).length ? q : undefined });
     },
+  };
+
+  readonly automations = {
+    list: (query?: { status?: string; limit?: number }): Promise<ListResponse<MailoflyAutomation>> => {
+      const q: Record<string, string | number> = {};
+      if (query?.status) q.status = query.status;
+      if (query?.limit != null) q.limit = query.limit;
+      return this.req("/automations", { query: Object.keys(q).length ? q : undefined });
+    },
+    create: (body: {
+      name: string;
+      trigger: Record<string, unknown>;
+      steps?: Record<string, unknown>[];
+      connections?: Record<string, unknown>[];
+      status?: "draft" | "active" | "disabled" | "archived";
+    }): Promise<ItemResponse<MailoflyAutomation>> =>
+      this.req("/automations", { method: "POST", body }),
+    get: (id: string): Promise<ItemResponse<MailoflyAutomation>> =>
+      this.req(`/automations/${encodeURIComponent(id)}`),
+    update: (id: string, body: Record<string, unknown>): Promise<ItemResponse<MailoflyAutomation>> =>
+      this.req(`/automations/${encodeURIComponent(id)}`, { method: "PATCH", body }),
+    delete: (id: string): Promise<{ id: string; deleted: boolean }> =>
+      this.req(`/automations/${encodeURIComponent(id)}`, { method: "DELETE" }),
+    stop: (id: string): Promise<{ id: string; status: "disabled" }> =>
+      this.req(`/automations/${encodeURIComponent(id)}/stop`, { method: "POST" }),
+    duplicate: (id: string): Promise<ItemResponse<MailoflyAutomation>> =>
+      this.req(`/automations/${encodeURIComponent(id)}/duplicate`, { method: "POST" }),
+    runs: {
+      list: (
+        automationId: string,
+        query?: { status?: string; limit?: number }
+      ): Promise<ListResponse<MailoflyAutomationRun>> => {
+        const q: Record<string, string | number> = {};
+        if (query?.status) q.status = query.status;
+        if (query?.limit != null) q.limit = query.limit;
+        return this.req(`/automations/${encodeURIComponent(automationId)}/runs`, {
+          query: Object.keys(q).length ? q : undefined,
+        });
+      },
+      get: (automationId: string, runId: string): Promise<ItemResponse<MailoflyAutomationRun>> =>
+        this.req(
+          `/automations/${encodeURIComponent(automationId)}/runs/${encodeURIComponent(runId)}`
+        ),
+    },
+  };
+
+  readonly events = {
+    send: (params: MailoflyEventSendParams): Promise<MailoflyEventSendResult> =>
+      this.req("/events/send", { method: "POST", body: params }),
+    list: (query?: {
+      name?: string;
+      email?: string;
+      limit?: number;
+    }): Promise<ListResponse<MailoflyAutomationEvent>> => {
+      const q: Record<string, string | number> = {};
+      if (query?.name) q.name = query.name;
+      if (query?.email) q.email = query.email;
+      if (query?.limit != null) q.limit = query.limit;
+      return this.req("/events", { query: Object.keys(q).length ? q : undefined });
+    },
+    get: (id: string): Promise<ItemResponse<MailoflyAutomationEvent>> =>
+      this.req(`/events/${encodeURIComponent(id)}`),
   };
 }
