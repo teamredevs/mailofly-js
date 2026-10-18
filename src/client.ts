@@ -95,6 +95,8 @@ export class Mailofly {
   };
 
   readonly templates = {
+    variables: (id: string): Promise<ItemResponse<{ id: string; variable_names: string[] }>> =>
+      this.req(`/templates/${encodeURIComponent(id)}/variables`),
     list: (): Promise<ListResponse<MailoflyTemplate>> => this.req("/templates"),
     create: (body: Record<string, unknown>): Promise<ItemResponse<MailoflyTemplate>> =>
       this.req("/templates", { method: "POST", body }),

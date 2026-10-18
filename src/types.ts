@@ -28,7 +28,10 @@ export type MailoflyIdentity = MailoflyAccount;
 
 export type MailoflyContact = Record<string, unknown>;
 
-export type MailoflyTemplate = Record<string, unknown>;
+export type MailoflyTemplate = Record<string, unknown> & {
+  /** Sorted, unique placeholder names, generated from template content. Read-only. */
+  variable_names: string[];
+};
 
 export type MailoflySegment = Record<string, unknown>;
 
