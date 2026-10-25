@@ -34,6 +34,8 @@ export async function mailoflyRequest<T>(options: {
     method: options.method ?? "GET",
     headers,
     body: options.body !== undefined ? JSON.stringify(options.body) : undefined,
+    // Bound ambiguous submissions. Consumers decide whether a retry is safe.
+    signal: AbortSignal.timeout(30_000),
   });
 
   const text = await res.text();
