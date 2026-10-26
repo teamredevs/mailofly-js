@@ -21,5 +21,9 @@ export type {
   MailoflyMailLog,
   MailoflySegment,
   MailoflyTemplate,
+  NativeTemplateDocument,
+  NativeTemplateInput,
+  NativeTemplateRevisions,
+  NativeTemplateWrite,
   MailLogsPage,
 } from "./types.js";

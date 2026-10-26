@@ -32,6 +32,17 @@ export type MailoflyTemplate = Record<string, unknown> & {
   /** Sorted, unique placeholder names, generated from template content. Read-only. */
   variable_names: string[];
 };
+/** Native wire envelope; the server validates each block and every style field. */
+export type NativeTemplateDocument = {
+  kind: "mailofly-document"; schemaVersion: 1;
+  page: unknown; body: unknown; theme: unknown; blocks: unknown[]; variables: unknown[];
+};
+export type NativeTemplateInput = {
+  document: NativeTemplateDocument; name: string; subject?: string;
+  from_email?: string; reply_to?: string; preview_text?: string;
+};
+export type NativeTemplateRevisions = { base_revision: number; draft_revision: number };
+export type NativeTemplateWrite = { id: string; templateId: string; baseRevision: number; draftRevision: number; publishedVersionId?: string; status?: string };
 
 export type MailoflySegment = Record<string, unknown>;
 

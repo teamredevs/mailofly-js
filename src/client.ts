@@ -16,6 +16,9 @@ import type {
   MailoflyDiscovery,
   MailoflySegment,
   MailoflyTemplate,
+  NativeTemplateInput,
+  NativeTemplateRevisions,
+  NativeTemplateWrite,
   MailLogsPage,
   MailoflyAutomation,
   MailoflyAutomationRun,
@@ -95,6 +98,13 @@ export class Mailofly {
   };
 
   readonly templates = {
+    createNative: (body: NativeTemplateInput): Promise<ItemResponse<NativeTemplateWrite>> => this.req("/templates", { method: "POST", body }),
+    updateNative: (id: string, body: Partial<NativeTemplateInput> & NativeTemplateRevisions): Promise<ItemResponse<NativeTemplateWrite>> =>
+      this.req(`/templates/${encodeURIComponent(id)}`, { method: "PATCH", body }),
+    draft: (id: string): Promise<ItemResponse<Record<string, unknown>>> => this.req(`/templates/${encodeURIComponent(id)}/draft`),
+    publish: (id: string, revisions: NativeTemplateRevisions): Promise<ItemResponse<NativeTemplateWrite>> => this.req(`/templates/${encodeURIComponent(id)}/publish`, { method: "POST", body: revisions }),
+    restoreVersion: (id: string, versionId: string, revisions: NativeTemplateRevisions): Promise<ItemResponse<NativeTemplateWrite>> =>
+      this.req(`/templates/${encodeURIComponent(id)}/versions/${encodeURIComponent(versionId)}/restore`, { method: "POST", body: revisions }),
     variables: (id: string): Promise<ItemResponse<{ id: string; variable_names: string[] }>> =>
       this.req(`/templates/${encodeURIComponent(id)}/variables`),
     list: (): Promise<ListResponse<MailoflyTemplate>> => this.req("/templates"),
